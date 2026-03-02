@@ -2,7 +2,8 @@
 
 class Character:
     def __init__(self):
-        self.health = 1000
+        self.max_health = 1000
+        self.health = self.max_health
         
     @property
     def is_alive(self) -> bool:
@@ -10,6 +11,9 @@ class Character:
 
     def attack(self, targeted_character: Character, damage: int):
         targeted_character.health = max(targeted_character.health - damage,0)
+
+    def heal(self, targeted_character: Character, health: int):
+        targeted_character.health = min(targeted_character.health + health, self.max_health)
 
 def test_characterExist():
 
@@ -47,3 +51,13 @@ def test_character_dead_has_health_zero():
     character1.attack(character2, 1500)
 
     assert character2.health == 0
+
+def test_is_character_healed_correctely():
+    
+    character1 = Character()
+    character2 = Character()
+
+    character1.attack(character2, 500)
+    character1.heal(character2, 1000)
+
+    assert character2.health == 1000
