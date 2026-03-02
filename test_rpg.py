@@ -23,6 +23,7 @@ class Character:
             
 
     def heal(self, health: int):
+        if not self.is_alive: return
         self.health = min(self.health + health, self.max_health)
 
 def test_character_exists():
@@ -92,3 +93,14 @@ def test_character_cant_hurt_self():
     # assert
     assert character1.health == 1000 # you can't attack yourself
 
+def test_character_can_not_heal_when_is_dead():
+    # arrange
+    character1 = Character()
+    character2 = Character()
+    character1.attack(character2, 1000)
+    # act
+    character2.heal(500)
+
+    # assert
+    assert character2.health == 0
+    assert not character2.is_alive
