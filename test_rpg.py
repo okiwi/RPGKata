@@ -15,11 +15,15 @@ class Character:
         return self.damage_taken // 1000 + 1
     
     def attack(self, targeted_character: Character, damage: int):
+        if targeted_character is self:
+            print("PLEASE DO NOT HARM YOURSELF")
+            return
         targeted_character.health = max(targeted_character.health - damage,0)
         targeted_character.damage_taken += damage
+            
 
-    def heal(self, targeted_character: Character, health: int):
-        targeted_character.health = min(targeted_character.health + health, self.max_health)
+    def heal(self, health: int):
+        self.health = min(self.health + health, self.max_health)
 
 def test_character_exists():
 
@@ -65,7 +69,7 @@ def test_is_character_healed_correctly():
     character2 = Character()
 
     character1.attack(character2, 500)
-    character1.heal(character2, 1000)
+    character2.heal(1000)
 
     assert character2.health == 1000
 
@@ -75,7 +79,16 @@ def test_leveling_up():
     character2 = Character()
 
     character1.attack(character2, 500)
-    character2.heal(character2, 1000)
+    character2.heal(1000)
     character1.attack(character2, 500)
     
     assert character2.level == 2
+
+def test_character_cant_hurt_self():
+    # arrange
+    character1 = Character()
+    # act
+    character1.attack(character1, 500)
+    # assert
+    assert character1.health == 1000 # you can't attack yourself
+
