@@ -1,2 +1,2 @@
-# CashCleanerDojo
-Dojo du 02/02/2026 sur le Thème de Cash Cleaner
+# RPGKATA
+Dojo du 02/03/2026 sur le Thème de RPG KATA
